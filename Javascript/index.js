@@ -95,6 +95,40 @@ function rectangularCollision({rectangle1, rectangle2}) {
         && rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
     )
 }
+let timer = 60;
+let timerId;
+function determineWinner({player, enemey, timerId})
+{
+    clearTimeout(timerId);
+    document.getElementById('result').style.display = 'flex';
+    if(player.health === enemy.health)
+    {
+        document.getElementById('result').innerText = 'Tie';
+    }
+    else if ( player.health > enemy.health)
+    {
+        document.getElementById('result').innerText = 'Player 1 Wins!';
+    }
+    else if ( player.health < enemy.health)
+    {
+        document.getElementById('result').innerText = 'Player 2 Wins!';
+    }
+}
+
+function decreaseTimer() {
+    if(timer > 0)
+    {
+    timerId = setTimeout(decreaseTimer, 1000)
+    timer--;
+    document.getElementById('timer').innerText = timer;
+    }
+
+    if(timer === 0)
+    {
+        determineWinner({player, enemy, timerId});
+
+    }
+}
 
 function animate() {
     window.requestAnimationFrame(animate);
@@ -144,6 +178,12 @@ function animate() {
         player.health -= 20;
         document.getElementById('player-health').style.width = player.health + "%";
     }
+
+    //end game on health
+    if(enemy.health <= 0 || player.health <= 0)
+    {
+        determineWinner({player, enemy, timerId});
+    }
 }
 
 const player = new Sprite({
@@ -181,6 +221,7 @@ const enemy = new Sprite({
 });
 
 animate();
+decreaseTimer();
 window.addEventListener('keydown', event => {
     switch (event.key) {
         case 'd':
