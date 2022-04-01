@@ -7,24 +7,6 @@ canvas.height = 576;
 c.fillRect(0, 0, canvas.width, canvas.height);
 const gravity = 0.7;
 
-const background = new Sprite({
-    position: {
-        x: 0,
-        y:0
-    },
-    imgSrc: './img/background.png'
-})
-
-const shop = new Sprite({
-    position: {
-        x: 600,
-        y:128
-    },
-    imgSrc: './img/shop.png',
-    scale: 2.75,
-    framesMax: 6
-})
-
 const keys = {
     a: {
         pressed: false
@@ -57,12 +39,14 @@ function animate() {
 
     //player movement
     player.velocity.x = 0;
-
+    player.image = player.sprites.idle.image;
     if( keys.a.pressed && player.lastKey === 'a') 
     {
         player.velocity.x = -5;
+        player.image = player.sprites.run.image;
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5;
+        player.image = player.sprites.run.image;
     }
 
     //enemy movement
@@ -104,6 +88,24 @@ function animate() {
     }
 }
 
+const background = new Sprite({
+    position: {
+        x: 0,
+        y:0
+    },
+    imgSrc: './img/background.png'
+});
+
+const shop = new Sprite({
+    position: {
+        x: 600,
+        y:128
+    },
+    imgSrc: './img/shop.png',
+    scale: 2.75,
+    framesMax: 6
+});
+
 const player = new Fighter({
     name: 'hero',
     position: {
@@ -125,6 +127,16 @@ const player = new Fighter({
     offset: {
         x: 215,
         y: 157
+    },
+    sprites: {
+        idle: {
+            imgSrc: './img/samuraiMack/Idle.png',
+            framesMax: 8,
+        },
+        run: {
+            imgSrc: './img/samuraiMack/Run.png',
+            framesMax: 8,
+        }
     }
 });
 
