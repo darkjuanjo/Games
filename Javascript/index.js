@@ -25,6 +25,7 @@ class Sprite {
         }
         this.color = color;
         this.isAttacking;
+        this.health = 100;
     }
 
     draw() {
@@ -129,6 +130,8 @@ function animate() {
     {
         player.isAttacking = false;
         console.log('kaabooom!');
+        enemy.health -= 20;
+        document.getElementById('enemy-health').style.width = enemy.health + "%";
     }
 
     if(rectangularCollision({
@@ -138,6 +141,8 @@ function animate() {
     {
         enemy.isAttacking = false;
         console.log('evil-kaabooom!');
+        player.health -= 20;
+        document.getElementById('player-health').style.width = player.health + "%";
     }
 }
 
